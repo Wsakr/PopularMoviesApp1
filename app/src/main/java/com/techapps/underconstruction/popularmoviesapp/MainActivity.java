@@ -1,8 +1,7 @@
 package com.techapps.underconstruction.popularmoviesapp;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
+
 import android.content.Context;
 
 import android.net.ConnectivityManager;
@@ -21,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
