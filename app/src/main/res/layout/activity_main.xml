@@ -1,0 +1,103 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/mytranslightgrey">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/topBarLinearLayout"
+        android:background="@color/myblue"
+        android:gravity="end"
+        android:elevation="6dp"
+        android:focusableInTouchMode="false">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="120dp"
+            android:layout_height="fill_parent"
+            android:text="Sort by:"
+            android:onClick="sortButtonClick"
+            android:textAllCaps="false"
+            android:id="@+id/sortingButton"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@drawable/abc_btn_default_mtrl_shape"
+            android:textSize="@dimen/text_size_18" />
+
+        <Spinner
+            android:layout_width="140dp"
+            android:layout_height="45dp"
+            android:id="@+id/filterSpinner"
+            android:prompt="@string/sorting_options"
+            android:layout_gravity="center_vertical"
+            android:dropDownWidth="125dp"
+            android:gravity="center"
+            android:popupBackground="@color/myblue"
+            android:popupElevation="4dp"
+            android:visibility="invisible"
+            android:spinnerMode="dropdown" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="5">
+
+        </LinearLayout>
+
+        <Switch
+            android:layout_width="79dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/filterSwitchToggle"
+            android:gravity="center_vertical|right"
+            android:elegantTextHeight="false"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:baselineAligned="false"
+        android:id="@+id/gridLinearLayout"
+        android:elevation="2dp"
+        android:layout_alignParentTop="true">
+
+        <FrameLayout
+            android:id="@+id/gridViewFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            tools:ignore="MergeRootFrame"
+            android:background="@color/mywhite"
+            android:layout_weight="1">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/movieDetailsFragment"
+            android:layout_weight=".75"
+            android:visibility="gone"></FrameLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/pageControlFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mytransdarkgrey"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp"
+        android:layout_centerHorizontal="true"
+        android:elevation="8dp">
+
+    </FrameLayout>
+
+
+</RelativeLayout>

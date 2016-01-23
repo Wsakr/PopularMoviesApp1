@@ -1,0 +1,84 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.techapps.underconstruction.popularmoviesapp.fragment_PageControl">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp" >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/first_page"
+                android:layout_weight="1"
+                android:onClick="onPagesButtonClick"
+                android:background="@drawable/firstpage" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/previous_page"
+                android:layout_weight="1"
+                android:onClick="onPagesButtonClick"
+                android:background="@drawable/leftbutton" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.75"
+            android:gravity="center_vertical|center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/pageNumberTV"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="@dimen/text_size_18"
+                android:background="@color/mytransparent"
+                android:textColor="@color/mywhite"
+                android:editable="false"
+                android:enabled="false"
+                android:focusableInTouchMode="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/next_page"
+                android:background="@drawable/rightbutton"
+                android:onClick="onPagesButtonClick"
+                android:layout_weight="1" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/last_page"
+                android:layout_weight="1"
+                android:onClick="onPagesButtonClick"
+                android:background="@drawable/lastpage" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

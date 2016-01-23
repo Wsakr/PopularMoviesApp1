@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/techapps/underconstruction/popularmoviesapp/MainActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/techapps/underconstruction/popularmoviesapp/MyGridAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/techapps/underconstruction/popularmoviesapp/MyJSONDataParser.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/techapps/underconstruction/popularmoviesapp/MyTaskLoader.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/techapps/underconstruction/popularmoviesapp/MyUriBuilder.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/techapps/underconstruction/popularmoviesapp/fragment_MovieStartGridlayout.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

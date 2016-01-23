@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="250dp"
+    android:orientation="vertical"
+    android:id="@+id/gridItemLayout"
+    android:background="@color/mywhite"
+    android:elevation="5dp"
+    android:padding="2dp"
+    android:clickable="false">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/movieTitleTextView"
+        android:textSize="@dimen/text_size_16"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="@color/mylightgrey"
+        android:background="@color/mytransmaroon"
+        android:minLines="2"
+        android:textStyle="bold"
+        android:layout_alignParentLeft="false"
+        android:layout_gravity="center_horizontal|top"
+        android:elevation="10dp"
+        android:padding="2dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/movieLinearLayout"
+        android:background="@drawable/android_blue"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:clickable="false"
+        android:focusableInTouchMode="false">
+
+    </LinearLayout>
+
+    <RatingBar
+        android:isIndicator="true"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:id="@+id/ratingBar"
+        style="@style/myCustomRatingBar"
+        android:mirrorForRtl="true"
+        android:layout_gravity="center_horizontal"
+        android:paddingEnd="3dp"
+        android:paddingStart="3dp"
+        android:layout_alignWithParentIfMissing="false"
+        android:background="@color/mytransparent"
+        android:layout_alignBottom="@+id/movieLinearLayout"
+        android:focusable="false"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
