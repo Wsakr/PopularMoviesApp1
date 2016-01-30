@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v7.appcompat.BuildConfig;
 import android.util.Log;
 import com.jakewharton.disklrucache.DiskLruCache;
 import org.json.JSONException;
@@ -195,7 +196,7 @@ public class MyTaskLoader<E>
                 final File cacheDir = getDiskCacheDir(mContext, IMAGE_DISK_CACHE_SUBDIR);
                 synchronized (mDiskCacheLock) {
                     try {
-                        mDiskLruCache = DiskLruCache.open(cacheDir,1, 1, DISK_CACHE_SIZE);
+                        mDiskLruCache = DiskLruCache.open(cacheDir, BuildConfig.VERSION_CODE, 1, DISK_CACHE_SIZE);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

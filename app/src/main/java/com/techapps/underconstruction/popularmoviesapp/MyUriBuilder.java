@@ -27,7 +27,7 @@ Simply combine them all and you will have a fully qualified URL.
 Here’s an example URL:http://image.tmdb.org/t/p/w500/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg
 */
  class MyUriBuilder {
-    private static final String TMDB_API = "e8692fec9d27c7482fb5cbbc0f49f443";
+    private static final String TMDB_API = "";
     protected static final String DISCOVER = "discover";
     protected static final String SEARCH = "search";
     protected static final String GENRE = "genre";
