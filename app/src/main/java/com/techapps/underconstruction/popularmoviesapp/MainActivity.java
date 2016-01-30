@@ -119,36 +119,62 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
 
     @Override
     public void onBackPressed() {
-        movieDetailScreen.resetView(topBar.getHeight());
+
 		if (orientation != Configuration.ORIENTATION_LANDSCAPE){
             detailLayout.setVisibility(View.GONE);
             gridLayout.setVisibility(View.VISIBLE);
+            if (topBar.getY()<0){
+                movieDetailScreen.resetView(topBar.getHeight());
+                topBar.animate().translationYBy(topBar.getHeight()).setDuration(300);
+                bottomBar.animate().translationYBy(-bottomBar.getHeight()).setDuration(300);
+            }
+            movieMainScreen= (fragment_MovieStartGridlayout) getSupportFragmentManager().findFragmentByTag("MovieMainScreenFRAGTAG");
+        } else {
+
+           // getSupportFragmentManager().popBackStack();
         }
+
         
-        movieMainScreen= (fragment_MovieStartGridlayout) getSupportFragmentManager().findFragmentByTag("MovieMainScreenFRAGTAG");
-       // if (movieMainScreen == null) {
-           // movieMainScreen = new fragment_MovieStartGridlayout();
-        //gridLayout.animate().translationYBy(-topBar.getHeight()).setDuration(500);
-       // getSupportFragmentManager().beginTransaction().replace(gridLayout.getId(), movieMainScreen, "MovieMainScreenFRAGTAG").commit();
+
+
+        //if(movieDetailScreen.isAdded()) {
+            //topBar.animate().translationYBy(topBar.getHeight()).setDuration(300);
+           // bottomBar.animate().translationYBy(-bottomBar.getHeight()).setDuration(300);
        // }
-        //movieMainScreen.loadNewData(sortOption, sortDirection, currentPageNumber);
-        if(movieDetailScreen.isAdded()) {
-            topBar.animate().translationYBy(topBar.getHeight()).setDuration(300);
-            bottomBar.animate().translationYBy(-bottomBar.getHeight()).setDuration(300);
-        }
-        //super.onBackPressed();
     }
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
-		orientation = newConfig.orientation;
+        super.onConfigurationChanged(newConfig);
+        orientation = newConfig.orientation;
+        //movieDetailScreen = (fragment_MovieDetail) getSupportFragmentManager().findFragmentByTag("MovieDetailScreenFRAGTAG");
 		if(orientation==Configuration.ORIENTATION_LANDSCAPE){
 			detailLayout.setVisibility(View.VISIBLE);
+            gridLayout.setVisibility(View.VISIBLE);
+            topBar.setPivotX(0);
+            topBar.setPivotY(0);
+            topBar.setScaleX(0.5f);
+            topBar.setScaleY(0.5f);
+            bottomBar.setPivotX(0);
+            bottomBar.setPivotY(bottomBar.getHeight());
+            bottomBar.setScaleX(0.5f);
+            bottomBar.setScaleY(0.5f);
+            if (topBar.getY()<0){
+                topBar.animate().translationYBy(topBar.getHeight()).setDuration(300);
+                bottomBar.animate().translationYBy(-bottomBar.getHeight()).setDuration(300);
+            }
 		} else {
 			detailLayout.setVisibility(View.GONE);
 			gridLayout.setVisibility(View.VISIBLE);
+            topBar.setPivotX(0);
+            topBar.setPivotY(0);
+            topBar.setScaleX(1.0f);
+            topBar.setScaleY(1.0f);
+            bottomBar.setPivotX(0);
+            bottomBar.setPivotY(bottomBar.getHeight());
+            bottomBar.setScaleX(1.0f);
+            bottomBar.setScaleY(1.0f);
 		}
-		//super.onConfigurationChanged(newConfig);
 	}
 
     @Override
@@ -247,14 +273,14 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
         if (movieDetailScreen == null) {
             movieDetailScreen = new fragment_MovieDetail();
             fragmentTransaction.replace(detailLayout.getId(), movieDetailScreen, "MovieDetailScreenFRAGTAG");
-        } else{
-			movieDetailScreen.resetView(topBar.getHeight());
-		}
+        }
         fragmentTransaction.commit();
 		 if(orientation!=Configuration.ORIENTATION_LANDSCAPE){
 			 gridLayout.setVisibility(View.GONE);
 			 detailLayout.setVisibility(View.VISIBLE);
-		 }
+		 } else{
+             movieDetailScreen.resetView(topBar.getHeight());
+         }
         
         movieDetailScreen.setDisplayData(movieChosenData);
 
@@ -263,8 +289,11 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
 
     @Override
     public void backdropImageLoaded(boolean isLoaded) {
-        topBar.animate().translationYBy(-topBar.getHeight()).setDuration(1000);
-        bottomBar.animate().translationYBy(bottomBar.getHeight()).setDuration(1000);
+        if (orientation != Configuration.ORIENTATION_LANDSCAPE){
+            topBar.animate().translationYBy(-topBar.getHeight()).setDuration(1000);
+            bottomBar.animate().translationYBy(bottomBar.getHeight()).setDuration(1000);
+        }
+
         if (isLoaded) {
             movieDetailScreen.stretchView(topBar.getHeight());
         }

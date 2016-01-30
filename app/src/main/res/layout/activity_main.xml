@@ -49,15 +49,6 @@
 
         </LinearLayout>
 
-        <Switch
-            android:layout_width="79dp"
-            android:layout_height="fill_parent"
-            android:id="@+id/filterSwitchToggle"
-            android:gravity="center_vertical|right"
-            android:elegantTextHeight="false"
-            android:layout_gravity="center_vertical"
-            android:visibility="gone" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -94,7 +85,6 @@
         android:background="@color/mytransdarkgrey"
         android:layout_alignParentBottom="true"
         android:padding="5dp"
-        android:layout_centerHorizontal="true"
         android:elevation="8dp">
 
     </FrameLayout>

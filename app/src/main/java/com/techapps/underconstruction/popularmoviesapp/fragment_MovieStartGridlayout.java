@@ -2,6 +2,7 @@ package com.techapps.underconstruction.popularmoviesapp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -126,6 +127,14 @@ public class fragment_MovieStartGridlayout extends android.support.v4.app.Fragme
             Log.i("Walid Frag", "onCreateView");
         return fragGridLayout;
         }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
+
+        }
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

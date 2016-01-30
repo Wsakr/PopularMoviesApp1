@@ -187,10 +187,11 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
     }
 	
 	void resetView(final float amount){
-
-        bigBackImage.setPivotY(0);
-        Log.i("Walid MovieDetailFrag","bigImageHeight "+String.valueOf(bigBackImage.getY()));
-        Log.i("Walid MovieDetailFrag", "topBarHeight " + String.valueOf(amount));
-        bigBackImage.animate().setInterpolator(new OvershootInterpolator()).scaleYBy(-(amount /( bigBackImage.getHeight()+amount))).setDuration(5000);
+        if (bigBackImage!=null) {
+            bigBackImage.setPivotY(0);
+            Log.i("Walid MovieDetailFrag", "bigImageHeight " + String.valueOf(bigBackImage.getY()));
+            Log.i("Walid MovieDetailFrag", "topBarHeight " + String.valueOf(amount));
+            bigBackImage.setScaleY(1.0f);
+        }
     }
 }

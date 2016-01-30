@@ -61,19 +61,17 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.MyViewHold
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         if (data != null && !data.isEmpty()){
-          HashMap singleData = data.get(position);
-            //double movieRate = (double) singleData.get(MyJSONDataParser.TAG_VOTE_AVERAGE);
-            //String movieRate = String.valueOf((double) (singleData.get(MyJSONDataParser.TAG_VOTE_AVERAGE)) * 0.6) ;
+            HashMap singleData = data.get(position);
             String movieRate = (String) singleData.get(MyJSONDataParser.TAG_VOTE_AVERAGE);
-          Bitmap movieBitmap;
-          String movieTitle = (String) data.get(position).get(MyJSONDataParser.TAG_TITLE);
-          String bitmapTtle = MyTaskLoader.provideBitmapKey(movieTitle);
+            Bitmap movieBitmap;
+            String movieTitle = (String) data.get(position).get(MyJSONDataParser.TAG_TITLE);
+            String bitmapTtle = MyTaskLoader.provideBitmapKey(movieTitle);
             if (singleData.containsKey(bitmapTtle)){
                 movieBitmap = (Bitmap)singleData.get(bitmapTtle);
             }else {
                 movieBitmap = placeHolder;
             }
-        Drawable bitmapDrawable = new BitmapDrawable(Resources.getSystem(),movieBitmap);
+            Drawable bitmapDrawable = new BitmapDrawable(Resources.getSystem(),movieBitmap);
             holder.movieTitle.setText((String)singleData.get(MyJSONDataParser.TAG_TITLE));
             holder.movieLayout.setBackground(bitmapDrawable);
             holder.movieRating.setRating(Float.valueOf(movieRate));
