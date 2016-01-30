@@ -23,7 +23,11 @@ import java.util.HashMap;
 /**
  * Created by Walid Sakr on 10/22/2015.
  */
-public class MyTaskLoader<E>  {
+
+import android.support.v7.appcompat.*;
+
+public class MyTaskLoader<E>
+  {
     private static String SrcOrDscvr;
     private static boolean internetConnected = true;
 
@@ -191,7 +195,7 @@ public class MyTaskLoader<E>  {
                 final File cacheDir = getDiskCacheDir(mContext, IMAGE_DISK_CACHE_SUBDIR);
                 synchronized (mDiskCacheLock) {
                     try {
-                        mDiskLruCache = DiskLruCache.open(cacheDir, BuildConfig.VERSION_CODE, 1, DISK_CACHE_SIZE);
+                        mDiskLruCache = DiskLruCache.open(cacheDir,1, 1, DISK_CACHE_SIZE);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

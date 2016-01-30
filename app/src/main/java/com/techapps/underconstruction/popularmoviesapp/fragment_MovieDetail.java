@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import android.widget.ActionMenuView.*;
 
 
 public class fragment_MovieDetail extends android.support.v4.app.Fragment {
@@ -178,8 +179,18 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
     void stretchView(final float amount){
 
         bigBackImage.setPivotY(0);
+		//bigBackImage.setPivotY(bigBackImage.getHeight());
         Log.i("Walid MovieDetailFrag","bigImageHeight "+String.valueOf(bigBackImage.getY()));
         Log.i("Walid MovieDetailFrag", "topBarHeight " + String.valueOf(amount));
-        bigBackImage.animate().setInterpolator(new OvershootInterpolator()).scaleYBy(amount / (bigBackImage.getHeight() + amount)).setDuration(5000);
+        bigBackImage.animate().setInterpolator(new OvershootInterpolator()).scaleYBy(amount / (bigBackImage.getHeight()+amount)).setDuration(5000);
+		//bigBackImage.animate().setInterpolator(new OvershootInterpolator()).scaleYBy(amount/bigBackImage.getHeight()).setDuration(5000);
+    }
+	
+	void resetView(final float amount){
+
+        bigBackImage.setPivotY(0);
+        Log.i("Walid MovieDetailFrag","bigImageHeight "+String.valueOf(bigBackImage.getY()));
+        Log.i("Walid MovieDetailFrag", "topBarHeight " + String.valueOf(amount));
+        bigBackImage.animate().setInterpolator(new OvershootInterpolator()).scaleYBy(-(amount /( bigBackImage.getHeight()+amount))).setDuration(5000);
     }
 }

@@ -72,7 +72,7 @@
         <FrameLayout
             android:id="@+id/gridViewFragment"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             tools:ignore="MergeRootFrame"
             android:background="@color/mywhite"
             android:layout_weight="1">
@@ -81,9 +81,9 @@
 
         <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:id="@+id/movieDetailsFragment"
-            android:layout_weight=".75"
+            android:layout_weight="1"
             android:visibility="gone"></FrameLayout>
     </LinearLayout>
 

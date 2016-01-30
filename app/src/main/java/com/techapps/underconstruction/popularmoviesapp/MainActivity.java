@@ -24,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import android.content.res.*;
 
 /*
 THE TMDB API to be inserted in the "MyUriBuilder" class in the TMDB_API static class member
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
     private fragment_MovieDetail movieDetailScreen;
     private LinearLayout topBar;
     private FrameLayout bottomBar;
+	private FrameLayout gridLayout;
+	private FrameLayout detailLayout;
     private Spinner choicesSpinner;
     private Button sortButton;
     private static boolean isConnected = true;
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
     private int currentPageNumber = 1;
     private String sortOption = null;
     private static String sortDirection = "desc";
+	private static int orientation = Configuration.ORIENTATION_UNDEFINED;
 
 
 
@@ -59,11 +63,13 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        orientation= getResources().getConfiguration().orientation;
         setContentView(R.layout.activity_main);
         isConnected = getConnectionStatus(this);
         topBar = (LinearLayout) findViewById(R.id.topBarLinearLayout);
         bottomBar = (FrameLayout) findViewById(R.id.pageControlFragment);
+		gridLayout = (FrameLayout) findViewById(R.id.gridViewFragment);
+		detailLayout = (FrameLayout) findViewById(R.id.movieDetailsFragment);
         choicesSpinner = (Spinner)findViewById(R.id.filterSpinner);
         sortButton = (Button) findViewById(R.id.sortingButton);
         mArrayAdapter = ArrayAdapter.createFromResource(this, R.array.sorting_list, R.layout.support_simple_spinner_dropdown_item);
@@ -86,14 +92,18 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
                 }
             }));
             Log.i("Walid Spinner State", String.valueOf(choicesSpinner.hasOnClickListeners()));
-
+        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
+			detailLayout.setVisibility(View.VISIBLE);
+		} else {
+			detailLayout.setVisibility(View.GONE);
+		}
         movieMainScreen = (fragment_MovieStartGridlayout) getSupportFragmentManager().findFragmentByTag("MovieMainScreenFRAGTAG");
         pageControls = (fragment_PageControl) getSupportFragmentManager().findFragmentByTag("PageControlsFRAGTAG");
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (movieMainScreen == null) {
             movieMainScreen = new fragment_MovieStartGridlayout();
-            fragmentTransaction.replace(R.id.gridViewFragment, movieMainScreen, "MovieMainScreenFRAGTAG");
+            fragmentTransaction.replace(gridLayout.getId(), movieMainScreen, "MovieMainScreenFRAGTAG");
         }
 
         if (pageControls == null) {
@@ -109,16 +119,17 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
 
     @Override
     public void onBackPressed() {
-        //if (detailView.getVisibility() == View.VISIBLE){
-            //detailView.setVisibility(View.GONE);
-            //gridView.setVisibility(View.VISIBLE);
-       // }
-        //movieMainScreen.getRetainInstance();
-        //movieMainScreen= (fragment_MovieStartGridlayout) getSupportFragmentManager().findFragmentByTag("MovieMainScreenFRAGTAG");
+        movieDetailScreen.resetView(topBar.getHeight());
+		if (orientation != Configuration.ORIENTATION_LANDSCAPE){
+            detailLayout.setVisibility(View.GONE);
+            gridLayout.setVisibility(View.VISIBLE);
+        }
+        
+        movieMainScreen= (fragment_MovieStartGridlayout) getSupportFragmentManager().findFragmentByTag("MovieMainScreenFRAGTAG");
        // if (movieMainScreen == null) {
            // movieMainScreen = new fragment_MovieStartGridlayout();
         //gridLayout.animate().translationYBy(-topBar.getHeight()).setDuration(500);
-        getSupportFragmentManager().beginTransaction().replace(R.id.gridViewFragment, movieMainScreen, "MovieMainScreenFRAGTAG").commit();
+       // getSupportFragmentManager().beginTransaction().replace(gridLayout.getId(), movieMainScreen, "MovieMainScreenFRAGTAG").commit();
        // }
         //movieMainScreen.loadNewData(sortOption, sortDirection, currentPageNumber);
         if(movieDetailScreen.isAdded()) {
@@ -127,6 +138,18 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
         }
         //super.onBackPressed();
     }
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		orientation = newConfig.orientation;
+		if(orientation==Configuration.ORIENTATION_LANDSCAPE){
+			detailLayout.setVisibility(View.VISIBLE);
+		} else {
+			detailLayout.setVisibility(View.GONE);
+			gridLayout.setVisibility(View.VISIBLE);
+		}
+		//super.onConfigurationChanged(newConfig);
+	}
 
     @Override
     protected void onDestroy() {
@@ -220,12 +243,19 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
     public void onMovieChosen(ArrayList movieChosenData) {
 
         movieDetailScreen = (fragment_MovieDetail) getSupportFragmentManager().findFragmentByTag("MovieDetailScreenFRAGTAG");
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (movieDetailScreen == null) {
             movieDetailScreen = new fragment_MovieDetail();
-            fragmentTransaction.replace(R.id.gridViewFragment, movieDetailScreen, "MovieDetailScreenFRAGTAG");
-        }
+            fragmentTransaction.replace(detailLayout.getId(), movieDetailScreen, "MovieDetailScreenFRAGTAG");
+        } else{
+			movieDetailScreen.resetView(topBar.getHeight());
+		}
         fragmentTransaction.commit();
+		 if(orientation!=Configuration.ORIENTATION_LANDSCAPE){
+			 gridLayout.setVisibility(View.GONE);
+			 detailLayout.setVisibility(View.VISIBLE);
+		 }
+        
         movieDetailScreen.setDisplayData(movieChosenData);
 
     }
