@@ -32,15 +32,18 @@ public class MyJSONDataParser {
     public static final String TAG_VIDEO = "video";
     public static final String TAG_VOTE_AVERAGE = "vote_average";
     public static final String TAG_VOTE_COUNT = "vote_count";
+    public static final String TAG_VIDEO_KEY = "key";
     public static final String TAG_MOVIE_BITMAP = "movie_bitmap";
     public static final String TAG_TOTAL_PAGES = "total_pages";
     private static final int TOTAL_NUMBER_OF_PAGES = 1000;
 
     private JSONArray resultMovies;
+    private JSONArray resultMovieVideoData;
     private String movieTitle;
     private int movieID;
     private static boolean isDataLoaded = false;
     private String jsonData;
+    private String videoKey;
 
     private ArrayList<Integer> movie_genres_id_list = new ArrayList<>();
     private ArrayList<HashMap> movieListMap = new ArrayList<>();
@@ -55,8 +58,31 @@ public class MyJSONDataParser {
             e.printStackTrace();
         }
     }
+    public MyJSONDataParser(int movieID,String newJsonData){
+        try {
+            parseVideoData(movieID,newJsonData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public void parseJsonData() throws JSONException {
+    private void parseVideoData(int movie, String newJsonData) throws JSONException {
+        JSONTokener jsonTokener = new JSONTokener(newJsonData);
+        JSONObject jsonObject = (JSONObject) jsonTokener.nextValue();
+        int movieID = jsonObject.getInt(TAG_MOVIE_ID);
+        if (movieID == movie) {
+            resultMovieVideoData = jsonObject.getJSONArray(TAG_RESULTS);
+            videoKey=resultMovieVideoData.getJSONObject(0).getString(TAG_VIDEO_KEY);
+        }
+    }
+
+    public String getVideoKey(){
+        return videoKey;
+    }
+
+
+
+    private void parseJsonData() throws JSONException {
         JSONTokener jsonTokener = new JSONTokener(jsonData);
         JSONObject jsonObject = (JSONObject) jsonTokener.nextValue();
         int pageNumber= jsonObject.getInt(TAG_PAGE);
@@ -108,58 +134,6 @@ public class MyJSONDataParser {
 
     public static int getTotalPages(){
         return TOTAL_NUMBER_OF_PAGES;
-    }
-
-    public void setMovieData(ArrayList<HashMap> movieData){
-        movieListMap = (ArrayList<HashMap>) movieData.clone();
-    }
-
-    public void clearMovieListData() {
-        movieListMap.clear();
-    }
-
-
-    public String getMovieImagePath(int position){
-        String movieImagePath="";
-        if (movieListMap.size()> 0) {
-            movieImagePath = movieListMap.get(position).get(TAG_POSTER_PATH).toString();
-        }else movieImagePath = "-1";
-
-        return movieImagePath;
-    }
-
-
-    public String getMovieTitle(int position){
-        String movieTitle;
-        movieTitle = movieListMap.get(position).get(MyJSONDataParser.TAG_TITLE).toString();
-        return movieTitle;
-    }
-
-    public float getMovieRating(int position){
-        float movieRating;
-        double voteAverage = (double) movieListMap.get(position).get(MyJSONDataParser.TAG_VOTE_AVERAGE);
-        movieRating = (float) voteAverage;
-        return movieRating;
-    }
-
-    public int getMovieVotingCount(int position){
-        int movieVotingAverages;
-        movieVotingAverages = (int) movieListMap.get(position).get(TAG_VOTE_COUNT);
-        return movieVotingAverages;
-    }
-    public String getMoviePosterPath(int position){
-        String moviePosterPath = movieListMap.get(position).get(MyJSONDataParser.TAG_BACKDROP_PATH).toString();
-        return moviePosterPath;
-    }
-
-    public String getMovieReleaseDate(int position){
-        String movieReleaseDate = movieListMap.get(position).get(MyJSONDataParser.TAG_RELEASE_DATE).toString();
-        return movieReleaseDate;
-    }
-
-    public String getMovieOverview(int position){
-        String movieOverview = movieListMap.get(position).get(MyJSONDataParser.TAG_OVERVIEW).toString();
-        return movieOverview;
     }
 
     public HashMap getSingleScreenData (HashMap movieDataMap){

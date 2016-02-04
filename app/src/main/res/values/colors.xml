@@ -50,4 +50,6 @@
         <item>@color/mytransparent</item>
     </integer-array>
 
+    <color name="mytranslightgrey">#91736f6e</color>
+    <color name="mytransdarkgrey">#c3736f6e</color>
 </resources>

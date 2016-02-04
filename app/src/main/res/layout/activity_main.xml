@@ -76,6 +76,7 @@
             android:id="@+id/movieDetailsFragment"
             android:layout_weight="1"
             android:visibility="gone"></FrameLayout>
+
     </LinearLayout>
 
     <FrameLayout

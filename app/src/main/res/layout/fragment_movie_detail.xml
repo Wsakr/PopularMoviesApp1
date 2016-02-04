@@ -10,7 +10,8 @@
 	<ScrollView
 		android:layout_height="match_parent"
 		android:layout_width="wrap_content"
-		android:background="@color/mytransmaroon">
+		android:background="@color/mytransmaroon"
+        android:id="@+id/scrollView">
 
 		<RelativeLayout
 			android:layout_width="fill_parent"
@@ -18,12 +19,12 @@
 			android:foregroundTint="@color/mytransmaroon"
 			android:id="@+id/movieDetailContainer">
 
-			<FrameLayout
+            <FrameLayout
 				android:layout_width="match_parent"
 				android:layout_height="160dp"
 				android:elevation="2dp"
 				android:visibility="visible"
-				android:id="@+id/backDropLayout"/>
+				android:id="@+id/backDropLayout" />
 
 			<FrameLayout
 				android:layout_width="60dp"
@@ -34,7 +35,7 @@
 				android:layout_alignParentEnd="false"
 				android:layout_alignParentStart="false"
 				android:layout_marginTop="110dp"
-				android:id="@+id/moviePosterLayout"/>
+				android:id="@+id/moviePosterLayout" />
 
 			<TextView
 				android:layout_width="fill_parent"
@@ -194,7 +195,24 @@
 				android:layout_marginBottom="7dp"
 				android:nestedScrollingEnabled="true"/>
 
-		</RelativeLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/playVideoButton"
+                android:layout_below="@+id/moviePlotTV" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/youtubeLayout"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/moviePlotTV">
+            </FrameLayout>
+
+        </RelativeLayout>
 
 	</ScrollView>
 

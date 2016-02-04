@@ -3,7 +3,6 @@ package com.techapps.underconstruction.popularmoviesapp;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -11,14 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.makeramen.roundedimageview.RoundedImageView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -78,7 +72,6 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.MyViewHold
                 Log.i("Walid GridAdapter", "onBindViewHolder_Load" + String.valueOf(data.get(position)));
         }else {
             holder.movieTitle.setText("Loading...");
-            //holder.movieLayout.setBackground(new BitmapDrawable(Resources.getSystem(),placeHolder));
             holder.movieRating.setRating(Float.valueOf(3.3f));
         }
     }
@@ -108,15 +101,8 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.MyViewHold
     }
 
 
-    //@Override
-    //public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        //super.onAttachedToRecyclerView(recyclerView);
-       // Log.i("Walid GridAdapter","onAttachedToRecyclerView");
-   // }
-
     public static class MyViewHolder extends RecyclerView.ViewHolder  {
         private TextView movieTitle;
-       // private RoundedImageView moviePoster;
         private RatingBar movieRating;
         private LinearLayout movieLayout;
 
@@ -142,13 +128,11 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.MyViewHold
             Log.i("Walid onLoadFinishedin", String.valueOf(this.data));
             Log.i("Walid GridAdaptListener", String.valueOf(dataChanged));
             } else {
-            //this.data = (ArrayList<HashMap>) data.clone();
              }
             dataChanged = true;
             if (listener != null) {
                 listener.onDataSetChanged(dataChanged);
             }
-            //dataChanged = false;
     }
 
     public ArrayList<HashMap> getMyAdapterData(){

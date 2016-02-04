@@ -30,19 +30,8 @@ public class fragment_MovieStartGridlayout extends android.support.v4.app.Fragme
     private int pageNumber = 1;
     private String sortingOption = null;
     private boolean doScrollToPosition = false;
-    //private static int newScrollPosition;
-    private int recyclerViewHeight;
-    private int recyclerViewWidth;
+
     private Context mContext;
-
-
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    //private static final String ARG_PARAM1 = "param1";
-    //private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -57,7 +46,6 @@ public class fragment_MovieStartGridlayout extends android.support.v4.app.Fragme
             pageNumber = savedInstanceState.getInt("pageNumber",1);
            sortingOption = savedInstanceState.getString("sortOption");
         }
-       // setRetainInstance(true);
     }
 
     @Override
@@ -75,7 +63,7 @@ public class fragment_MovieStartGridlayout extends android.support.v4.app.Fragme
         View fragGridLayout = inflater.inflate(R.layout.fragment_gridlayout_movie_start, container, false);
             prepareDataLoader();
             GridLayoutManager rvLayoutManager;
-            // Inflate the layout for this fragment
+
             myRecyclerView = (RecyclerView) fragGridLayout.findViewById(R.id.myViewRecycler);
             myRecyclerView.setHasFixedSize(true);
             rvLayoutManager = new GridLayoutManager(mContext, 2);
@@ -103,25 +91,6 @@ public class fragment_MovieStartGridlayout extends android.support.v4.app.Fragme
                 });
             }
             myRecyclerView.setAdapter(myGridAdapter);
-           /* recyclerViewHeight = myRecyclerView.getHeight();
-            recyclerViewWidth = myRecyclerView.getWidth();
-           myRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                View childView;
-
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        childView = recyclerView.findChildViewUnder(recyclerViewWidth / 10, (float) (recyclerViewHeight / 1.5));
-                        newScrollPosition = recyclerView.getChildPosition(childView);
-                    }
-                }
-
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-                }
-            }); */
 
 
             Log.i("Walid Frag", "onCreateView");
@@ -183,10 +152,6 @@ public class fragment_MovieStartGridlayout extends android.support.v4.app.Fragme
                 if (doScrollToPosition) {
                     myRecyclerView.smoothScrollToPosition(0);
                 }
-                //else {
-                //  if (newScrollPosition != 0)
-                //    myRecyclerView.smoothScrollToPosition(newScrollPosition + 2);
-                // }
                 doScrollToPosition = false;
 
                 Log.i("Walid SetAdapter DL", " onLoadFinished" + loader.getId());
@@ -355,6 +320,7 @@ public class fragment_MovieStartGridlayout extends android.support.v4.app.Fragme
         chosenMovieData.add(MyTaskLoader.movieList.get(position).get(MyJSONDataParser.TAG_RELEASE_DATE));
         chosenMovieData.add(MyTaskLoader.movieList.get(position).get(MyJSONDataParser.TAG_OVERVIEW));
         chosenMovieData.add(MyTaskLoader.movieList.get(position).get(MyJSONDataParser.TAG_BACKDROP_PATH));
+        chosenMovieData.add(MyTaskLoader.movieList.get(position).get(MyJSONDataParser.TAG_MOVIE_ID));
 
         return chosenMovieData;
     }

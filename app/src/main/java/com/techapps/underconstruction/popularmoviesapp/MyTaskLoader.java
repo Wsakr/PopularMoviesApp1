@@ -103,9 +103,7 @@ public class MyTaskLoader<E>
                     try {
                         myJSONDataParser = new MyJSONDataParser(responseJSON);
                     } finally {
-                        Log.i("MovieListSize B Load",String.valueOf(movieList.size()));
                         movieList = myJSONDataParser.getMovieListAllData();
-                        Log.i("MovieListSize A Load",String.valueOf(movieList.size()));
                     }
                 }
                     screenDataList=new ArrayList<>();
@@ -169,6 +167,130 @@ public class MyTaskLoader<E>
             Log.i("Walid DataLoader", "onReset");
         }
     }
+    public static class VideoLinkFetcher extends AsyncTaskLoader<String> {
+        private String videoKey;
+        private MyUriBuilder myUriBuilder;
+        private String dataUrlStr;
+        private MyJSONDataParser myJSONDataParser ;
+        private int movieID;
+
+        public VideoLinkFetcher(Context context, int movieID) {
+            super(context);
+            this.movieID = movieID;
+            myUriBuilder = new MyUriBuilder(movieID);
+        }
+
+
+        @Override
+        public String loadInBackground() {
+
+            HttpURLConnection urlConnection = null;
+            InputStream inputStream = null;
+            internetConnected = MainActivity.isInternetConnected();
+
+            if (!internetConnected) {
+                // Toast.makeText(getActivityContext(), "No Internet Connection", Toast.LENGTH_LONG);
+                //Load data from previous data or something i have to check
+                return null;
+            } else {
+                this.dataUrlStr = myUriBuilder.getVideoUrlStr();
+                try {
+                    URL url = new URL(dataUrlStr);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.connect();
+                    inputStream = urlConnection.getInputStream();
+                    int http_status = urlConnection.getResponseCode();
+                    Log.i("Walid DL Http_Status",String.valueOf(http_status));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                InputStreamReader inputStreamReader = null;
+                if (inputStream != null) {
+                    inputStreamReader = new InputStreamReader(inputStream);
+                }
+                assert inputStreamReader != null;
+                BufferedReader myBufferedReader = new BufferedReader(inputStreamReader);
+                StringBuilder sbTemp = new StringBuilder();
+                String line;
+
+                try {
+                    while ((line = myBufferedReader.readLine()) != null) {
+                        sbTemp.append(line);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        myBufferedReader.close();
+                        inputStreamReader.close();
+                        inputStream.close();
+                        urlConnection.disconnect();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    String responseJSON = sbTemp.toString();
+                    try {
+                        myJSONDataParser = new MyJSONDataParser(movieID,responseJSON);
+                    } finally {
+                        videoKey = myJSONDataParser.getVideoKey();
+                    }
+                }
+            }
+
+            return videoKey;
+        }
+
+        @Override
+        protected void onStartLoading (){
+            super.onStartLoading();
+             if (videoKey != null){
+               deliverResult(videoKey);
+           } else{
+            forceLoad();
+            Log.i("Walid DataLoader","onStartLoading");
+            }
+        }
+
+       @Override
+        public void deliverResult(String data){
+            if (isReset()){
+                if (data!=null) {
+                    data = null;
+                    Log.i("Walid DataLoader", "deliverResult_isReset");
+                }
+            }
+            if (isStarted()){
+                Log.i("Walid DataLoader", "deliverResult_isStarted");
+                super.deliverResult(videoKey);
+            }
+        }
+
+
+        @Override
+        protected void onStopLoading(){
+            Log.i("Walid DataLoader", "onStopLoading");
+            cancelLoad();
+            onCanceled(videoKey);
+        }
+
+        @Override
+        public void onCanceled(String data) {
+            super.onCanceled(data);
+            if (data != null)data = null;
+            Log.i("Walid DataLoader", "onCanceled");
+        }
+
+        @Override
+        protected void onReset(){
+            super.onReset();
+            onStopLoading();
+            if (videoKey!=null){
+                videoKey = null;
+            }
+            Log.i("Walid DataLoader", "onReset");
+        }
+    }
+
     public static final int MAX_KEY_LENGTH = 64;
     public static int imagePositionCounter = -1;
 

@@ -39,6 +39,7 @@ to get more than one page we add "&page=1 or 2 or 3 .......
 
 public class MainActivity extends AppCompatActivity implements fragment_MovieStartGridlayout.OnFragmentInteractionListener, fragment_PageControl.OnFragmentInteractionListener, fragment_MovieDetail.OnMovieDetailFragmentListener {
 
+
     private fragment_MovieStartGridlayout movieMainScreen;
     private fragment_PageControl pageControls;
     private fragment_MovieDetail movieDetailScreen;
@@ -75,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
         mArrayAdapter = ArrayAdapter.createFromResource(this, R.array.sorting_list, R.layout.support_simple_spinner_dropdown_item);
         mArrayAdapter.setDropDownViewResource(android.support.v7.appcompat.R.layout.support_simple_spinner_dropdown_item);
         choicesSpinner.setAdapter(mArrayAdapter);
-
         Log.i("Walid Spinner State",String.valueOf(choicesSpinner.hasOnClickListeners()));
             choicesSpinner.setOnItemSelectedListener(new MySpinnerSelectListener(new MySpinnerSelectListener.MySpinnerListener() {
                 @Override
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
     @Override
     public void onBackPressed() {
 
-		if (orientation != Configuration.ORIENTATION_LANDSCAPE){
+		if (orientation != Configuration.ORIENTATION_LANDSCAPE && detailLayout.getVisibility()==View.VISIBLE){
             detailLayout.setVisibility(View.GONE);
             gridLayout.setVisibility(View.VISIBLE);
             if (topBar.getY()<0){
@@ -289,14 +289,14 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
 
     @Override
     public void backdropImageLoaded(boolean isLoaded) {
-        if (orientation != Configuration.ORIENTATION_LANDSCAPE){
-            topBar.animate().translationYBy(-topBar.getHeight()).setDuration(1000);
-            bottomBar.animate().translationYBy(bottomBar.getHeight()).setDuration(1000);
-        }
+       // if (orientation != Configuration.ORIENTATION_LANDSCAPE){
+           // topBar.animate().translationYBy(-topBar.getHeight()).setDuration(1000);
+          //  bottomBar.animate().translationYBy(bottomBar.getHeight()).setDuration(1000);
+       // }
 
-        if (isLoaded) {
-            movieDetailScreen.stretchView(topBar.getHeight());
-        }
+       // if (isLoaded) {
+           // movieDetailScreen.stretchView(topBar.getHeight());
+      //  }
     }
 
     private static class MySpinnerSelectListener implements AdapterView.OnItemSelectedListener{
