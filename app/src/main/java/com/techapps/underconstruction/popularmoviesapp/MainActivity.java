@@ -2,6 +2,7 @@ package com.techapps.underconstruction.popularmoviesapp;
 
 
 
+import android.animation.Animator;
 import android.content.Context;
 
 import android.net.ConnectivityManager;
@@ -11,10 +12,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -120,60 +123,49 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
     @Override
     public void onBackPressed() {
 
+        if (movieDetailScreen.getYoutubeContainerStatus()== View.VISIBLE){
+            movieDetailScreen.setYoutubeContainerStatus();
+        } else {
 		if (orientation != Configuration.ORIENTATION_LANDSCAPE && detailLayout.getVisibility()==View.VISIBLE){
             detailLayout.setVisibility(View.GONE);
             gridLayout.setVisibility(View.VISIBLE);
             if (topBar.getY()<0){
                 movieDetailScreen.resetView(topBar.getHeight());
-                topBar.animate().translationYBy(topBar.getHeight()).setDuration(300);
-                bottomBar.animate().translationYBy(-bottomBar.getHeight()).setDuration(300);
+                showNavigationBars();
             }
             movieMainScreen= (fragment_MovieStartGridlayout) getSupportFragmentManager().findFragmentByTag("MovieMainScreenFRAGTAG");
         } else {
 
            // getSupportFragmentManager().popBackStack();
         }
-
-        
-
-
         //if(movieDetailScreen.isAdded()) {
             //topBar.animate().translationYBy(topBar.getHeight()).setDuration(300);
            // bottomBar.animate().translationYBy(-bottomBar.getHeight()).setDuration(300);
-       // }
+        }
     }
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         orientation = newConfig.orientation;
-        //movieDetailScreen = (fragment_MovieDetail) getSupportFragmentManager().findFragmentByTag("MovieDetailScreenFRAGTAG");
-		if(orientation==Configuration.ORIENTATION_LANDSCAPE){
+		if(orientation==Configuration.ORIENTATION_LANDSCAPE ){
 			detailLayout.setVisibility(View.VISIBLE);
             gridLayout.setVisibility(View.VISIBLE);
-            topBar.setPivotX(0);
-            topBar.setPivotY(0);
-            topBar.setScaleX(0.5f);
-            topBar.setScaleY(0.5f);
-            bottomBar.setPivotX(0);
-            bottomBar.setPivotY(bottomBar.getHeight());
-            bottomBar.setScaleX(0.5f);
-            bottomBar.setScaleY(0.5f);
+            shrinkNavigationBars();
             if (topBar.getY()<0){
-                topBar.animate().translationYBy(topBar.getHeight()).setDuration(300);
-                bottomBar.animate().translationYBy(-bottomBar.getHeight()).setDuration(300);
+                showNavigationBars();
             }
 		} else {
-			detailLayout.setVisibility(View.GONE);
-			gridLayout.setVisibility(View.VISIBLE);
-            topBar.setPivotX(0);
-            topBar.setPivotY(0);
-            topBar.setScaleX(1.0f);
-            topBar.setScaleY(1.0f);
-            bottomBar.setPivotX(0);
-            bottomBar.setPivotY(bottomBar.getHeight());
-            bottomBar.setScaleX(1.0f);
-            bottomBar.setScaleY(1.0f);
+            if ( movieDetailScreen.getYoutubeContainerStatus()!=View.VISIBLE) {
+                detailLayout.setVisibility(View.GONE);
+                gridLayout.setVisibility(View.VISIBLE);
+                growNavigationBars();
+            }else {
+                detailLayout.setVisibility(View.VISIBLE);
+                gridLayout.setVisibility(View.GONE);
+                hideNavigationBars();
+                growNavigationBars();
+            }
 		}
 	}
 
@@ -278,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
 		 if(orientation!=Configuration.ORIENTATION_LANDSCAPE){
 			 gridLayout.setVisibility(View.GONE);
 			 detailLayout.setVisibility(View.VISIBLE);
+             hideNavigationBars();
 		 } else{
              movieDetailScreen.resetView(topBar.getHeight());
          }
@@ -288,15 +281,16 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
 
 
     @Override
-    public void backdropImageLoaded(boolean isLoaded) {
-       // if (orientation != Configuration.ORIENTATION_LANDSCAPE){
-           // topBar.animate().translationYBy(-topBar.getHeight()).setDuration(1000);
-          //  bottomBar.animate().translationYBy(bottomBar.getHeight()).setDuration(1000);
-       // }
+    public void backdropImageLoaded(final boolean isLoaded) {
+        if (isLoaded) {
+            movieDetailScreen.stretchView(topBar.getHeight());
+        }
+    }
 
-       // if (isLoaded) {
-           // movieDetailScreen.stretchView(topBar.getHeight());
-      //  }
+    @Override
+    public void loadChosenMovieTrailer(String movieKey) {
+
+
     }
 
     private static class MySpinnerSelectListener implements AdapterView.OnItemSelectedListener{
@@ -345,6 +339,36 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
         }
         return choice;
     }
+
+    private void showNavigationBars(){
+        topBar.animate().translationYBy(topBar.getHeight()).setDuration(300);
+        bottomBar.animate().translationYBy(-bottomBar.getHeight()).setDuration(300);
+    }
+    private void hideNavigationBars(){
+        topBar.animate().translationYBy(-topBar.getHeight()).setDuration(1000);
+        bottomBar.animate().translationYBy(bottomBar.getHeight()).setDuration(1000);
+    }
+    private void growNavigationBars(){
+        topBar.setPivotX(0);
+        topBar.setPivotY(0);
+        topBar.setScaleX(1.0f);
+        topBar.setScaleY(1.0f);
+        bottomBar.setPivotX(0);
+        bottomBar.setPivotY(bottomBar.getHeight());
+        bottomBar.setScaleX(1.0f);
+        bottomBar.setScaleY(1.0f);
+    }
+    private void shrinkNavigationBars(){
+        topBar.setPivotX(0);
+        topBar.setPivotY(0);
+        topBar.setScaleX(0.5f);
+        topBar.setScaleY(0.5f);
+        bottomBar.setPivotX(0);
+        bottomBar.setPivotY(bottomBar.getHeight());
+        bottomBar.setScaleX(0.5f);
+        bottomBar.setScaleY(0.5f);
+    }
+
 }
 
 

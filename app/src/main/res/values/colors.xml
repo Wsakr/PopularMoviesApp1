@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="myblue" type="color">#FF33B5E5</item>
-    <item name="mypurple" type="color">#FFAA66CC</item>
-    <item name="mygreen" type="color">#FF99CC00</item>
-    <item name="mylightgrey" type="color">#d3d3d3</item>
-    <item name="mydarkgrey" type="color">#736F6E</item>
-    <item name="mytransdarkgrey" type="color">#C3736F6E</item>
-    <item name="mytranslightgrey" type="color">#91736F6E</item>
-    <item name="mygrey" type="color">#808080</item>
-    <item name="myorange" type="color">#FFFFBB33</item>
-    <item name="myred" type="color">#FFFF4444</item>
-    <item name="myyellow" type="color">#FFFFFF00</item>
-    <item name="mytransyellow" type="color">#87FFFF00</item>
-    <item name="mydarkblue" type="color">#FF0099CC</item>
-    <item name="mydarkpurple" type="color">#FF9933CC</item>
-    <item name="mydarkgreen" type="color">#FF669900</item>
-    <item name="mydarkorange" type="color">#FFFF8800</item>
-    <item name="mydarkred" type="color">#FFCC0000</item>
-    <item name="mytransdarkred" type="color">#C3CC0000</item>
-    <item name="mymaroon" type="color">#FF330000</item>
-    <item name="mytransmaroon" type="color">#96330000</item>
-    <item name="mywhite" type="color">#FFFFFFFF</item>
-    <item name="myblack" type="color">#FF000000</item>
-    <item name="mytransparent" type="color">#00000000</item>
+    <color name="myblue"          >#FF33B5E5</color>
+    <color name="mypurple"        >#FFAA66CC</color>
+    <color name="mygreen"         >#FF99CC00</color>
+    <color name="mylightgrey"     >#d3d3d3</color>
+    <color name="mydarkgrey"      >#736F6E</color>
+    <color name="mytransdarkgrey" >#c3736f6e</color>
+    <color name="mytranslightgrey">#91736F6E</color>
+    <color name="mygrey"          >#808080</color>
+    <color name="myorange"        >#FFFFBB33</color>
+    <color name="myred"           >#FFFF4444</color>
+    <color name="myyellow"        >#FFFFFF00</color>
+    <color name="mytransyellow"   >#87FFFF00</color>
+    <color name="mydarkblue"      >#FF0099CC</color>
+    <color name="mydarkpurple"    >#FF9933CC</color>
+    <color name="mydarkgreen"     >#FF669900</color>
+    <color name="mydarkorange"    >#FFFF8800</color>
+    <color name="mydarkred"       >#FFCC0000</color>
+    <color name="mytransdarkred"  >#C3CC0000</color>
+    <color name="mymaroon"        >#FF330000</color>
+    <color name="mytransmaroon"   >#96330000</color>
+    <color name="mywhite"         >#FFFFFFFF</color>
+    <color name="myblack"         >#FF000000</color>
+    <color name="mytransparent"   >#00000000</color>
+    <color name="mytransmatgrey"  >#a0736f6e</color>
+    <color name="mytransblack">#c8000000</color>
 
     <integer-array name="androidcolors">
         <item>@color/myblue</item>
@@ -48,8 +50,9 @@
         <item>@color/mywhite</item>
         <item>@color/myblack</item>
         <item>@color/mytransparent</item>
+        <item>@color/mytransmatgrey</item>
     </integer-array>
 
-    <color name="mytranslightgrey">#91736f6e</color>
-    <color name="mytransdarkgrey">#c3736f6e</color>
+
+
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
@@ -11,7 +11,11 @@
 		android:layout_height="match_parent"
 		android:layout_width="wrap_content"
 		android:background="@color/mytransmaroon"
-        android:id="@+id/scrollView">
+        android:id="@+id/scrollView"
+		android:layout_alignParentLeft="true"
+		android:layout_marginLeft="0dp"
+		android:layout_alignParentTop="true"
+		android:layout_marginTop="0dp">
 
 		<RelativeLayout
 			android:layout_width="fill_parent"
@@ -161,7 +165,7 @@
 					android:layout_marginRight="2dp"/>
 
 			</LinearLayout>
-			
+
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
@@ -200,21 +204,36 @@
                 android:layout_height="wrap_content"
                 android:text="New Button"
                 android:id="@+id/playVideoButton"
-                android:layout_below="@+id/moviePlotTV" />
+                android:layout_below="@+id/moviePlotTV"
+				android:layout_alignParentBottom="false" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/youtubeLayout"
-                android:layout_alignParentBottom="false"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentStart="false"
-                android:layout_below="@+id/moviePlotTV">
-            </FrameLayout>
-
-        </RelativeLayout>
+		</RelativeLayout>
 
 	</ScrollView>
 
-</FrameLayout>
+	<FrameLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:visibility="gone"
+		android:id="@+id/youtubeContainerLayout"
+		android:elevation="20dp"
+		android:background="@color/mytransblack">
+
+		<FrameLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:id="@+id/controlFrameLayout">
+
+			<fragment
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:name="com.techapps.underconstruction.popularmoviesapp.MyYouTubeFragment"
+                android:id="@+id/newYoutubeFragment"
+                android:layout_gravity="center" />
+		</FrameLayout>
+
+	</FrameLayout>
+
+</RelativeLayout>
 

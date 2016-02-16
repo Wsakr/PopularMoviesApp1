@@ -1,14 +1,15 @@
 package com.techapps.underconstruction.popularmoviesapp;
 
 
+import android.animation.Animator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.support.v4.view.ScrollingView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +23,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import android.widget.ActionMenuView.*;
 
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 
 public class fragment_MovieDetail extends android.support.v4.app.Fragment {
@@ -32,6 +31,8 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
     private ScrollView scrollView;
     private  FrameLayout bigBackImage;
     private  FrameLayout smallFrontImage;
+    private  FrameLayout youtubeContainer;
+    private  FrameLayout controlFrame;
     private  TextView movieTitleTV;
     private  TextView ratingValueTV;
     private  TextView releaseDateTV;
@@ -39,6 +40,12 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
     private  TextView moviePlotTV;
     private  RatingBar movieRatingBar;
     private Button playVideo;
+   // private ViewGroup youtubeContainer;
+    //private View youtubeView;
+    private MyYouTubeFragment myYouTubeFragment;
+
+
+
 
     private String movieTitle;
     private float movieRating;
@@ -74,14 +81,17 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView( LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragMovieDetail;
             fragMovieDetail = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
+            //myYouTubeFragment = (MyYouTubeFragment) getChildFragmentManager().findFragmentById(R.id.newYoutubeFragment);
             scrollView = (ScrollView) fragMovieDetail.findViewById(R.id.scrollView);
             bigBackImage = (FrameLayout) fragMovieDetail.findViewById(R.id.backDropLayout);
             smallFrontImage = (FrameLayout) fragMovieDetail.findViewById(R.id.moviePosterLayout);
+            youtubeContainer = (FrameLayout) fragMovieDetail.findViewById(R.id.youtubeContainerLayout);
+            controlFrame = (FrameLayout) fragMovieDetail.findViewById(R.id.controlFrameLayout);
             movieTitleTV = (TextView) fragMovieDetail.findViewById(R.id.movieTitleTV);
             ratingValueTV = (TextView) fragMovieDetail.findViewById(R.id.ratingTV);
             numberOfVotesTV = (TextView) fragMovieDetail.findViewById(R.id.votesNumberTV);
@@ -90,15 +100,33 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
             movieRatingBar = (RatingBar) fragMovieDetail.findViewById(R.id.movieDetailRatingBar);
             movieRatingBar.setNumStars(6);
             movieRatingBar.setStepSize(0.1f);
-
             playVideo = (Button) fragMovieDetail.findViewById(R.id.playVideoButton);
+
             playVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                youtubeContainer.setVisibility(View.VISIBLE);
+
+                myYouTubeFragment = new MyYouTubeFragment();
+                getChildFragmentManager().beginTransaction().replace(controlFrame.getId(),myYouTubeFragment).commit();
+                myYouTubeFragment.setVideoId(videoKey);
+                Log.i("Walid Click VideoKey",videoKey);
+                if (mListener != null){
+                    mListener.loadChosenMovieTrailer(videoKey);
+                }
             }
         });
 
         return fragMovieDetail;
+    }
+
+
+    public int getYoutubeContainerStatus(){
+     return youtubeContainer.getVisibility();
+    }
+
+    public void setYoutubeContainerStatus(){
+      youtubeContainer.setVisibility(View.GONE);
     }
 
 
@@ -133,7 +161,8 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
 
     public interface OnMovieDetailFragmentListener {
 
-         void backdropImageLoaded(boolean isLoaded);
+        void backdropImageLoaded(boolean isLoaded);
+        void loadChosenMovieTrailer(String movieKey);
     }
 
      private boolean updateDetailFragView(){
