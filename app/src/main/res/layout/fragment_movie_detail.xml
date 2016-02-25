@@ -138,7 +138,7 @@
 				android:orientation="horizontal"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:elevation="5dp"
+				android:elevation="10dp"
 				android:id="@+id/linearLayout2"
 				android:layout_above="@+id/moviePlotTV"
 				android:layout_alignRight="@+id/backDropLayout"
@@ -202,10 +202,34 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Button"
+                android:text="View Trailer"
                 android:id="@+id/playVideoButton"
-                android:layout_below="@+id/moviePlotTV"
-				android:layout_alignParentBottom="false" />
+				android:backgroundTint="@color/mytransmaroon"
+				android:textColor="@color/mygreen"
+				android:layout_alignParentEnd="false"
+				android:layout_below="@+id/moviePlotTV"
+				android:layout_marginLeft="3dp" />
+
+			<FrameLayout
+				android:layout_width="wrap_content"
+				android:layout_height="110dp"
+				android:layout_alignParentBottom="true"
+				android:layout_toRightOf="@+id/playVideoButton"
+				android:layout_toEndOf="@+id/playVideoButton"
+				android:layout_marginLeft="3dp"
+				android:id="@+id/youtubeList"
+				android:elevation="17dp"
+				android:background="@color/mymaroon"
+				android:visibility="gone"
+				android:layout_marginRight="3dp">
+
+				<android.support.v7.widget.RecyclerView
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+					android:id="@+id/youtubeListRecycler">
+				</android.support.v7.widget.RecyclerView>
+
+			</FrameLayout>
 
 		</RelativeLayout>
 

@@ -7,7 +7,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v7.appcompat.BuildConfig;
 import android.util.Log;
 import com.jakewharton.disklrucache.DiskLruCache;
-import org.json.JSONException;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -24,8 +24,6 @@ import java.util.HashMap;
 /**
  * Created by Walid Sakr on 10/22/2015.
  */
-
-import android.support.v7.appcompat.*;
 
 public class MyTaskLoader<E>
   {
@@ -167,8 +165,8 @@ public class MyTaskLoader<E>
             Log.i("Walid DataLoader", "onReset");
         }
     }
-    public static class VideoLinkFetcher extends AsyncTaskLoader<String> {
-        private String videoKey;
+    public static class VideoLinkFetcher extends AsyncTaskLoader<ArrayList<String>> {
+        private ArrayList<String> videoKey;
         private MyUriBuilder myUriBuilder;
         private String dataUrlStr;
         private MyJSONDataParser myJSONDataParser ;
@@ -182,7 +180,7 @@ public class MyTaskLoader<E>
 
 
         @Override
-        public String loadInBackground() {
+        public ArrayList<String> loadInBackground() {
 
             HttpURLConnection urlConnection = null;
             InputStream inputStream = null;
@@ -232,7 +230,7 @@ public class MyTaskLoader<E>
                     try {
                         myJSONDataParser = new MyJSONDataParser(movieID,responseJSON);
                     } finally {
-                        videoKey = myJSONDataParser.getVideoKey();
+                        videoKey = myJSONDataParser.getVideoKeyList();
                     }
                 }
             }
@@ -252,7 +250,7 @@ public class MyTaskLoader<E>
         }
 
        @Override
-        public void deliverResult(String data){
+        public void deliverResult(ArrayList<String> data){
             if (isReset()){
                 if (data!=null) {
                     data = null;
@@ -274,7 +272,7 @@ public class MyTaskLoader<E>
         }
 
         @Override
-        public void onCanceled(String data) {
+        public void onCanceled(ArrayList<String> data) {
             super.onCanceled(data);
             if (data != null)data = null;
             Log.i("Walid DataLoader", "onCanceled");

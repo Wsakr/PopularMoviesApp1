@@ -2,7 +2,7 @@
 <resources>
     <color name="myblue"          >#FF33B5E5</color>
     <color name="mypurple"        >#FFAA66CC</color>
-    <color name="mygreen"         >#FF99CC00</color>
+    <color name="mygreen"         >#99cc00</color>
     <color name="mylightgrey"     >#d3d3d3</color>
     <color name="mydarkgrey"      >#736F6E</color>
     <color name="mytransdarkgrey" >#c3736f6e</color>
@@ -11,20 +11,20 @@
     <color name="myorange"        >#FFFFBB33</color>
     <color name="myred"           >#FFFF4444</color>
     <color name="myyellow"        >#FFFFFF00</color>
-    <color name="mytransyellow"   >#87FFFF00</color>
+    <color name="mytransyellow"   >#87ffff00</color>
     <color name="mydarkblue"      >#FF0099CC</color>
     <color name="mydarkpurple"    >#FF9933CC</color>
     <color name="mydarkgreen"     >#FF669900</color>
     <color name="mydarkorange"    >#FFFF8800</color>
     <color name="mydarkred"       >#FFCC0000</color>
     <color name="mytransdarkred"  >#C3CC0000</color>
-    <color name="mymaroon"        >#FF330000</color>
+    <color name="mymaroon"        >#330000</color>
     <color name="mytransmaroon"   >#96330000</color>
     <color name="mywhite"         >#FFFFFFFF</color>
     <color name="myblack"         >#FF000000</color>
     <color name="mytransparent"   >#00000000</color>
     <color name="mytransmatgrey"  >#a0736f6e</color>
-    <color name="mytransblack">#c8000000</color>
+    <color name="mytransblack"    >#af000000</color>
 
     <integer-array name="androidcolors">
         <item>@color/myblue</item>
@@ -51,6 +51,7 @@
         <item>@color/myblack</item>
         <item>@color/mytransparent</item>
         <item>@color/mytransmatgrey</item>
+        <item>@color/mytransblack</item>
     </integer-array>
 
 

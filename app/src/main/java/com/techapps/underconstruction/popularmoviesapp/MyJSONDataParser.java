@@ -43,10 +43,11 @@ public class MyJSONDataParser {
     private int movieID;
     private static boolean isDataLoaded = false;
     private String jsonData;
-    private String videoKey;
+
 
     private ArrayList<Integer> movie_genres_id_list = new ArrayList<>();
     private ArrayList<HashMap> movieListMap = new ArrayList<>();
+    private ArrayList<String> videoList = new ArrayList<>();
 
 
 
@@ -71,13 +72,17 @@ public class MyJSONDataParser {
         JSONObject jsonObject = (JSONObject) jsonTokener.nextValue();
         int movieID = jsonObject.getInt(TAG_MOVIE_ID);
         if (movieID == movie) {
+            String videoKey;
             resultMovieVideoData = jsonObject.getJSONArray(TAG_RESULTS);
-            videoKey=resultMovieVideoData.getJSONObject(0).getString(TAG_VIDEO_KEY);
+            for (int i =0; i<resultMovieVideoData.length();i++) {
+                videoKey = resultMovieVideoData.getJSONObject(i).getString(TAG_VIDEO_KEY);
+                videoList.add(videoKey);
+            }
         }
     }
 
-    public String getVideoKey(){
-        return videoKey;
+    public ArrayList<String> getVideoKeyList(){
+        return videoList;
     }
 
 

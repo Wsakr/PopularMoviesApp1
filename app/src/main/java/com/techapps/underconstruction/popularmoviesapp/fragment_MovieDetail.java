@@ -10,6 +10,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +42,9 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
     private  TextView moviePlotTV;
     private  RatingBar movieRatingBar;
     private Button playVideo;
+    private RecyclerView videoListRecycler;
+    private FrameLayout youtubeListLayout;
+    private YoutubeListAdapter listAdapter;
    // private ViewGroup youtubeContainer;
     //private View youtubeView;
     private MyYouTubeFragment myYouTubeFragment;
@@ -53,7 +58,7 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
     private String releaseDate;
     private String movieOverview;
     private String backdropPath;
-    private String videoKey;
+    private ArrayList<String> videoKey;
     private int movieID;
 
     //private String mParam1;
@@ -79,11 +84,12 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
 
     }
-
+    private MyRecyclerViewClickListener videoChoiceListener;
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View fragMovieDetail;
+
             fragMovieDetail = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
             //myYouTubeFragment = (MyYouTubeFragment) getChildFragmentManager().findFragmentById(R.id.newYoutubeFragment);
@@ -92,6 +98,7 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
             smallFrontImage = (FrameLayout) fragMovieDetail.findViewById(R.id.moviePosterLayout);
             youtubeContainer = (FrameLayout) fragMovieDetail.findViewById(R.id.youtubeContainerLayout);
             controlFrame = (FrameLayout) fragMovieDetail.findViewById(R.id.controlFrameLayout);
+            youtubeListLayout = (FrameLayout) fragMovieDetail.findViewById(R.id.youtubeList);
             movieTitleTV = (TextView) fragMovieDetail.findViewById(R.id.movieTitleTV);
             ratingValueTV = (TextView) fragMovieDetail.findViewById(R.id.ratingTV);
             numberOfVotesTV = (TextView) fragMovieDetail.findViewById(R.id.votesNumberTV);
@@ -101,22 +108,31 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
             movieRatingBar.setNumStars(6);
             movieRatingBar.setStepSize(0.1f);
             playVideo = (Button) fragMovieDetail.findViewById(R.id.playVideoButton);
-
-            playVideo.setOnClickListener(new View.OnClickListener() {
+        LinearLayoutManager recyclerLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        videoListRecycler = (RecyclerView) fragMovieDetail.findViewById(R.id.youtubeListRecycler);
+        videoListRecycler.setLayoutManager(recyclerLayoutManager);
+        playVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                youtubeContainer.setVisibility(View.VISIBLE);
-
-                myYouTubeFragment = new MyYouTubeFragment();
-                getChildFragmentManager().beginTransaction().replace(controlFrame.getId(),myYouTubeFragment).commit();
-                myYouTubeFragment.setVideoId(videoKey);
-                Log.i("Walid Click VideoKey",videoKey);
-                if (mListener != null){
-                    mListener.loadChosenMovieTrailer(videoKey);
+                if (listAdapter == null){
+                    listAdapter = new YoutubeListAdapter(videoKey);
+                } else {
+                    listAdapter.setVideoList(videoKey);
                 }
+                youtubeListLayout.setVisibility(View.VISIBLE);
+                videoListRecycler.setAdapter(listAdapter);
             }
         });
-
+        videoChoiceListener = new MyRecyclerViewClickListener(getActivity(), new MyRecyclerViewClickListener.RecyclerClickListener() {
+            @Override
+            public void onItemClicked(int childPosition) {
+                youtubeContainer.setVisibility(View.VISIBLE);
+                myYouTubeFragment = new MyYouTubeFragment();
+                getChildFragmentManager().beginTransaction().replace(controlFrame.getId(),myYouTubeFragment).commit();
+                myYouTubeFragment.setVideoId(videoKey.get(childPosition));
+            }
+        });
+        videoListRecycler.addOnItemTouchListener(videoChoiceListener);
         return fragMovieDetail;
     }
 
@@ -125,8 +141,17 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
      return youtubeContainer.getVisibility();
     }
 
+    public int getYoutubeListStatus(){
+     return youtubeListLayout.getVisibility();
+    }
+
     public void setYoutubeContainerStatus(){
-      youtubeContainer.setVisibility(View.GONE);
+        myYouTubeFragment.stopVideoPlayer();
+        youtubeContainer.setVisibility(View.GONE);
+    }
+
+    public void setYoutubeListStatus(){
+      youtubeListLayout.setVisibility(View.GONE);
     }
 
 
@@ -162,7 +187,6 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
     public interface OnMovieDetailFragmentListener {
 
         void backdropImageLoaded(boolean isLoaded);
-        void loadChosenMovieTrailer(String movieKey);
     }
 
      private boolean updateDetailFragView(){
@@ -199,23 +223,23 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
     }
 
 
-    LoaderManager.LoaderCallbacks<String> videoKeyCallbacks;
+    LoaderManager.LoaderCallbacks<ArrayList<String>> videoKeyCallbacks;
     private void loadVideoKey(final int mo_id){
-        videoKeyCallbacks = new LoaderManager.LoaderCallbacks<String>() {
+        videoKeyCallbacks = new LoaderManager.LoaderCallbacks<ArrayList<String>>() {
             @Override
-            public Loader<String> onCreateLoader(int id, Bundle args) {
+            public Loader<ArrayList<String>> onCreateLoader(int id, Bundle args) {
                 return new MyTaskLoader.VideoLinkFetcher(getActivity(),mo_id);
             }
 
             @Override
-            public void onLoadFinished(Loader<String> loader, String data) {
+            public void onLoadFinished(Loader<ArrayList<String>> loader, ArrayList<String> data) {
                 if (data != null)
-                Log.i("Walid Video Key",data);
+                Log.i("Walid Video Key",data.toString());
                 videoKey = data;
             }
 
             @Override
-            public void onLoaderReset(Loader<String> loader) {
+            public void onLoaderReset(Loader<ArrayList<String>> loader) {
 
             }
         };
@@ -270,3 +294,14 @@ public class fragment_MovieDetail extends android.support.v4.app.Fragment {
         }
     }
 }
+
+
+/* youtubeContainer.setVisibility(View.VISIBLE);
+
+        myYouTubeFragment = new MyYouTubeFragment();
+        getChildFragmentManager().beginTransaction().replace(controlFrame.getId(),myYouTubeFragment).commit();
+        myYouTubeFragment.setVideoId(videoKey);
+        Log.i("Walid Click VideoKey",videoKey);
+        if (mListener != null){
+        mListener.loadChosenMovieTrailer(videoKey);
+        } */

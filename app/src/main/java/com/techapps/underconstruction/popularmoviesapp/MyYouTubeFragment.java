@@ -18,9 +18,11 @@ import com.google.android.youtube.player.YouTubePlayerSupportFragment;
  */
 public class MyYouTubeFragment extends YouTubePlayerSupportFragment implements YouTubePlayer.OnInitializedListener{
 
-    private static final String DEBUG_YOUTUBE_API_KEY = "AIzaSyBY6kuC2hRs7fsbmDW8G6VcfFTt0_eTQtI";
+    protected static final String DEBUG_YOUTUBE_API_KEY = "AIzaSyBY6kuC2hRs7fsbmDW8G6VcfFTt0_eTQtI";
     private static final String VIDEO_ID = "VIDEO_ID";
     private String videoID;
+    private static boolean isVideoPlaying = false;
+    private YouTubePlayer tubePlayer;
 
     public MyYouTubeFragment(){
     }
@@ -44,6 +46,7 @@ public class MyYouTubeFragment extends YouTubePlayerSupportFragment implements Y
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean isRestored) {
         Log.i("Walid MyYoutubeFragment","true");
+        tubePlayer = youTubePlayer;
         youTubePlayer.setFullscreenControlFlags(YouTubePlayer.FULLSCREEN_FLAG_CONTROL_ORIENTATION);
         youTubePlayer.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE);
         youTubePlayer.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI);
@@ -54,6 +57,9 @@ public class MyYouTubeFragment extends YouTubePlayerSupportFragment implements Y
             } else {
                 youTubePlayer.loadVideo(videoID);
             }
+        }
+        if (youTubePlayer.isPlaying()){
+            isVideoPlaying = true;
         }
         Log.i("Walid MyYoutubeFragment",String.valueOf(videoID));
     }
@@ -68,7 +74,8 @@ public class MyYouTubeFragment extends YouTubePlayerSupportFragment implements Y
         initialize(DEBUG_YOUTUBE_API_KEY,this);
     }
 
-    public void startPlaying(){
-
+    public void stopVideoPlayer(){
+        tubePlayer.pause();
+        tubePlayer.release();
     }
 }

@@ -107,16 +107,8 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.MyViewHold
         }
     }
 
-
-    //@Override
-    //public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        //super.onAttachedToRecyclerView(recyclerView);
-       // Log.i("Walid GridAdapter","onAttachedToRecyclerView");
-   // }
-
     public static class MyViewHolder extends RecyclerView.ViewHolder  {
         private TextView movieTitle;
-       // private RoundedImageView moviePoster;
         private RatingBar movieRating;
         private LinearLayout movieLayout;
 

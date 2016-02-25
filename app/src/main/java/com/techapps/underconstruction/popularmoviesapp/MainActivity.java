@@ -125,7 +125,9 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
 
         if (movieDetailScreen.getYoutubeContainerStatus()== View.VISIBLE){
             movieDetailScreen.setYoutubeContainerStatus();
-        } else {
+        } else if (movieDetailScreen.getYoutubeListStatus() == View.VISIBLE) {
+            movieDetailScreen.setYoutubeListStatus();
+        }else {
 		if (orientation != Configuration.ORIENTATION_LANDSCAPE && detailLayout.getVisibility()==View.VISIBLE){
             detailLayout.setVisibility(View.GONE);
             gridLayout.setVisibility(View.VISIBLE);
@@ -285,12 +287,6 @@ public class MainActivity extends AppCompatActivity implements fragment_MovieSta
         if (isLoaded) {
             movieDetailScreen.stretchView(topBar.getHeight());
         }
-    }
-
-    @Override
-    public void loadChosenMovieTrailer(String movieKey) {
-
-
     }
 
     private static class MySpinnerSelectListener implements AdapterView.OnItemSelectedListener{
